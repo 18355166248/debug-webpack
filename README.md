@@ -29,3 +29,15 @@ async loadWebpack (handleError = true) {
   +  return this.tryRequireThenImport(pathStr, handleError);
 }
 ```
+
+引入了 webpack-dev-server 所以要改下引用
+
+在 webpack-cli/packages/serve/src/index.ts
+
+```js
+  + const serverPath = path.resolve(__dirname, "../../../../", "webpack-dev-server/lib/Server");
+  + const DevServer = require(serverPath);
+  - // const DevServer = require(WEBPACK_DEV_SERVER_PACKAGE);
+```
+
+然后执行下 webpack-cli/package.json 下的 build 命令

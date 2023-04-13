@@ -7,4 +7,8 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js",
   },
+  devServer: {
+    port: 1234,
+    host: "0.0.0.0",
+  },
 };

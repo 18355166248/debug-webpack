@@ -1,3 +1,4 @@
+import path from 'path';
 import type { Compiler, cli } from "webpack";
 import { IWebpackCLI, WebpackDevServerOptions } from "webpack-cli";
 
@@ -132,7 +133,9 @@ class ServeCommand {
         }
 
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const DevServer = require(WEBPACK_DEV_SERVER_PACKAGE);
+        const serverPath = path.resolve(__dirname, "../../../../", "webpack-dev-server/lib/Server");
+        const DevServer = require(serverPath);
+        // const DevServer = require(WEBPACK_DEV_SERVER_PACKAGE);
 
         try {
           // eslint-disable-next-line @typescript-eslint/no-var-requires

@@ -5,9 +5,11 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "dev": "node ./webpack/bin/webpack serve -c webpack.config.js",
     "build": "node ./webpack/bin/webpack -c webpack.config.js",
     "install:cli": "cd webpack-cli && yarn",
     "install:webpack": "cd webpack && yarn",
+    "install:server": "cd webpack-dev-server && yarn",
     "install": "npm-run-all -s install:*"
   },
   "keywords": [],

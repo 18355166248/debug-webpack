@@ -46,8 +46,7 @@
     "test:ci": "yarn test:cli && yarn test:packages",
     "test:watch": "jest test/ packages/ --watch",
     "publish:monorepo": "yarn build && lerna version && lerna publish from-git",
-    "update:docs": "node ./scripts/update-docs",
-    "prepare": "husky install"
+    "update:docs": "node ./scripts/update-docs"
   },
   "peerDependencies": {
     "webpack": "5.x.x"
