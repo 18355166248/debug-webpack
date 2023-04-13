@@ -120,6 +120,7 @@ const webpack = /** @type {WebpackFunctionSingle & WebpackFunctionMulti} */ (
 			let watch = false;
 			/** @type {WatchOptions|WatchOptions[]} */
 			let watchOptions;
+			// 多个entry
 			if (Array.isArray(options)) {
 				/** @type {MultiCompiler} */
 				compiler = createMultiCompiler(
