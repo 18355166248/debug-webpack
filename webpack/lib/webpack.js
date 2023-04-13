@@ -59,12 +59,16 @@ const createMultiCompiler = (childOptions, options) => {
  * @returns {Compiler} a compiler
  */
 const createCompiler = rawOptions => {
+	// 初始化 options
 	const options = getNormalizedWebpackOptions(rawOptions);
+	// 设置 webpack 的默认 options 值
 	applyWebpackOptionsBaseDefaults(options);
 	const compiler = new Compiler(options.context, options);
+	// 自定义 plugin 清除缓存
 	new NodeEnvironmentPlugin({
 		infrastructureLogging: options.infrastructureLogging
 	}).apply(compiler);
+	// 初始化 plugin 监听
 	if (Array.isArray(options.plugins)) {
 		for (const plugin of options.plugins) {
 			if (typeof plugin === "function") {
@@ -74,11 +78,13 @@ const createCompiler = rawOptions => {
 			}
 		}
 	}
+	// 应用 webpack 默认的 options
 	applyWebpackOptionsDefaults(options);
-	compiler.hooks.environment.call();
-	compiler.hooks.afterEnvironment.call();
-	new WebpackOptionsApply().process(options, compiler);
-	compiler.hooks.initialize.call();
+	//
+	compiler.hooks.environment.call(); // 触发监听 environment 的回调
+	compiler.hooks.afterEnvironment.call(); // 触发监听 afterEnvironment 的回调
+	new WebpackOptionsApply().process(options, compiler); // 基于 options 应用对应的 plugin
+	compiler.hooks.initialize.call(); // 触发监听 initialize 的回调
 	return compiler;
 };
 

@@ -595,7 +595,7 @@ class WebpackOptionsApply extends OptionsApply {
 			options.snapshot.managedPaths,
 			options.snapshot.immutablePaths
 		).apply(compiler);
-
+		// 缓存 plugin
 		if (options.cache && typeof options.cache === "object") {
 			const cacheOptions = options.cache;
 			switch (cacheOptions.type) {
