@@ -4,4 +4,4 @@ function getA() {
   return a;
 }
 
-console.log(777);
+console.log(6666);

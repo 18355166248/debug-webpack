@@ -41,3 +41,13 @@ async loadWebpack (handleError = true) {
 ```
 
 然后执行下 webpack-cli/package.json 下的 build 命令
+
+
+## webpack-dev-server
+
+初始化: webpack-dev-server/lib/Server.js
+做了三件事:
+
++ 启动静态服务器
++ 开通长连接
++ 为打包产物注入HMR代码【使得客户端具备热更新能力】

@@ -1818,6 +1818,7 @@ class Server {
               `"hot: true" automatically applies HMR plugin, you don't have to add it manually to your webpack configuration.`
             );
           } else {
+            // 提供热替换的能力
             // Apply the HMR plugin
             const plugin = new webpack.HotModuleReplacementPlugin();
 
@@ -1835,15 +1836,15 @@ class Server {
     }
 
     this.setupHooks();
-    this.setupApp();
+    this.setupApp(); // 初始化 express
     this.setupHostHeaderCheck();
-    this.setupDevMiddleware();
+    this.setupDevMiddleware(); // 初始化 webpack-dev-middleware 能够将webpack编译产物提交给服务器，并且他将产物放置在内存中
     // Should be after `webpack-dev-middleware`, otherwise other middlewares might rewrite response
-    this.setupBuiltInRoutes();
-    this.setupWatchFiles();
-    this.setupWatchStaticFiles();
-    this.setupMiddlewares();
-    this.createServer();
+    this.setupBuiltInRoutes(); // 设置几个接口访问
+    this.setupWatchFiles(); // 监听文件
+    this.setupWatchStaticFiles(); // 监听静态文件
+    this.setupMiddlewares(); // 初始化一些中间件
+    this.createServer(); // 初始化一个 socket 服务
 
     if (this.options.setupExitSignals) {
       const signals = ["SIGINT", "SIGTERM"];
@@ -2473,6 +2474,7 @@ class Server {
    * @returns {void}
    */
   createServer() {
+    // type = http
     const { type, options } = /** @type {ServerConfiguration} */ (
       this.options.server
     );
@@ -3210,13 +3212,14 @@ class Server {
    * @param {WatchOptions} [watchOptions]
    */
   watchFiles(watchPath, watchOptions) {
-    const chokidar = require("chokidar");
+    const chokidar = require("chokidar"); // 监听文件变化插件
     const watcher = chokidar.watch(watchPath, watchOptions);
 
     // disabling refreshing on changing the content
     if (this.options.liveReload) {
       watcher.on("change", (item) => {
         if (this.webSocketServer) {
+          // 通信 通知页面刷新 执行 location.reload()
           this.sendMessage(
             this.webSocketServer.clients,
             "static-changed",
