@@ -12,3 +12,4 @@ examples/*.*
 
 # Ignore generated files
 *.check.js
+lib

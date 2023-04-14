@@ -655,20 +655,41 @@ class Server {
 
         webSocketURLStr = searchParams.toString();
       }
+      const clientPath = path.resolve(
+        __dirname,
+        "../"
+      );
       // 【socket管理】
+      // additionalEntries.push(
+      //   `${require.resolve(clientPath + "/client/index.js")}?${webSocketURLStr}`
+      // );
       additionalEntries.push(
         `${require.resolve("../client/index.js")}?${webSocketURLStr}`
       );
     }
 
+    const hotPathStr = path.resolve(
+      __dirname,
+      "../../",
+      "webpack/hot/"
+    );
+
     if (this.options.hot === "only") {
       additionalEntries.push(require.resolve("webpack/hot/only-dev-server"));
+      // additionalEntries.push(require.resolve(hotPathStr + "/only-dev-server"));
     } else if (this.options.hot) {
       // 【热更新能力】
       additionalEntries.push(require.resolve("webpack/hot/dev-server"));
+      // additionalEntries.push(require.resolve(hotPathStr + "/dev-server"));
     }
 
-    const webpack = compiler.webpack || require("webpack");
+    const pathStr = path.resolve(
+      __dirname,
+      "../../",
+      "webpack/lib/webpack"
+    );
+    const webpack = compiler.webpack || require(pathStr);
+    // const webpack = compiler.webpack || require("webpack");
 
     // use a hook to add entries if available
     if (typeof webpack.EntryPlugin !== "undefined") {
@@ -1926,12 +1947,14 @@ class Server {
    * @private
    * @returns {void}
    */
-  setupHooks() {
+  setupHooks () {
+    // 监听 客户端代码变化
     this.compiler.hooks.invalid.tap("webpack-dev-server", () => {
       if (this.webSocketServer) {
         this.sendMessage(this.webSocketServer.clients, "invalid");
       }
     });
+    // webpack-dev-server 插件监听 hooks.done
     this.compiler.hooks.done.tap(
       "webpack-dev-server",
       /**
@@ -3286,6 +3309,7 @@ class Server {
         })
       );
     } else {
+      // 初始化 host 和端口
       this.options.host = await Server.getHostname(
         /** @type {Host} */ (this.options.host)
       );
@@ -3321,14 +3345,14 @@ class Server {
     }
 
     if (this.options.webSocketServer) {
-      this.createWebSocketServer();
+      this.createWebSocketServer(); // 创建一个 socket
     }
 
     if (this.options.bonjour) {
       this.runBonjour();
     }
 
-    this.logStatus();
+    this.logStatus(); // 打印 webpack-dev-server 信息
 
     if (typeof this.options.onListening === "function") {
       this.options.onListening(this);

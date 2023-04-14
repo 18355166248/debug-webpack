@@ -1016,8 +1016,15 @@ class WebpackCLI implements IWebpackCLI {
     return options;
   }
 
-  async loadWebpack(handleError = true) {
-    return this.tryRequireThenImport<typeof webpack>(WEBPACK_PACKAGE, handleError);
+  async loadWebpack (handleError = true) {
+    // TODO 这里修改 webpack 引入路径
+    const pathStr = path.resolve(
+      __dirname,
+      "../../../../",
+      "webpack/lib"
+    );
+    return this.tryRequireThenImport<typeof webpack>(pathStr, handleError);
+    // return this.tryRequireThenImport<typeof webpack>(WEBPACK_PACKAGE, handleError);
   }
 
   async run(args: Parameters<WebpackCLICommand["parseOptions"]>[0], parseOptions: ParseOptions) {

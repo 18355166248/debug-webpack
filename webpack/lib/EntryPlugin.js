@@ -20,6 +20,9 @@ class EntryPlugin {
 	 * @param {EntryOptions | string=} options entry options (passing a string is deprecated)
 	 */
 	constructor(context, entry, options) {
+		if (entry.indexOf('/client') > -1) {
+			console.log(entry,context, options)
+		}
 		this.context = context;
 		this.entry = entry;
 		this.options = options || "";

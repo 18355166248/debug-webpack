@@ -774,7 +774,10 @@ class WebpackCLI {
         return options;
     }
     async loadWebpack(handleError = true) {
-        return this.tryRequireThenImport(WEBPACK_PACKAGE, handleError);
+        // TODO 这里修改 webpack 引入路径
+        const pathStr = path.resolve(__dirname, "../../../../", "webpack/lib");
+        return this.tryRequireThenImport(pathStr, handleError);
+        // return this.tryRequireThenImport<typeof webpack>(WEBPACK_PACKAGE, handleError);
     }
     async run(args, parseOptions) {
         // Built-in internal commands

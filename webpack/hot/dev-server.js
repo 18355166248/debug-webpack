@@ -62,13 +62,14 @@ if (module.hot) {
 	};
 	var hotEmitter = require("./emitter");
 	hotEmitter.on("webpackHotUpdate", function (currentHash) {
+		console.log(55656)
 		lastHash = currentHash;
 		if (!upToDate() && module.hot.status() === "idle") {
 			log("info", "[HMR] Checking for updates on the server...");
 			check();
 		}
 	});
-	log("info", "[HMR] Waiting for update signal from WDS...");
+	log("info", "[HMR] 调试 Waiting for update signal from WDS...");
 } else {
 	throw new Error("[HMR] Hot Module Replacement is disabled.");
 }
