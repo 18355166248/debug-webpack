@@ -655,7 +655,7 @@ class Server {
 
         webSocketURLStr = searchParams.toString();
       }
-
+      // 【socket管理】
       additionalEntries.push(
         `${require.resolve("../client/index.js")}?${webSocketURLStr}`
       );
@@ -664,6 +664,7 @@ class Server {
     if (this.options.hot === "only") {
       additionalEntries.push(require.resolve("webpack/hot/only-dev-server"));
     } else if (this.options.hot) {
+      // 【热更新能力】
       additionalEntries.push(require.resolve("webpack/hot/dev-server"));
     }
 
