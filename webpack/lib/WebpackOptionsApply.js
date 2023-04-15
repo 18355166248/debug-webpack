@@ -349,7 +349,7 @@ class WebpackOptionsApply extends OptionsApply {
 			new HttpUriPlugin(httpOptions).apply(compiler);
 		}
 
-		new EntryOptionPlugin().apply(compiler);
+		new EntryOptionPlugin().apply(compiler); // 设置 entry
 		compiler.hooks.entryOption.call(options.context, options.entry);
 
 		new RuntimePlugin().apply(compiler);

@@ -596,7 +596,7 @@ class Compiler {
 			if (err) return callback(err);
 
 			const assets = compilation.getAssets();
-			compilation.assets = { ...compilation.assets };
+			compilation.assets = { ...compilation.assets }; // 获取到要输出的资源列表
 			/** @type {Map<string, { path: string, source: Source, size: number, waiting: { cacheEntry: any, file: string }[] }>} */
 			const caseInsensitiveMap = new Map();
 			/** @type {Set<string>} */
@@ -887,10 +887,10 @@ ${other}`);
 				}
 			);
 		};
-
+		// 输出资源到输出目录
 		this.hooks.emit.callAsync(compilation, err => {
 			if (err) return callback(err);
-			outputPath = compilation.getPath(this.outputPath, {});
+			outputPath = compilation.getPath(this.outputPath, {}); // 获取输出目录 output
 			mkdirp(this.outputFileSystem, outputPath, emitFiles);
 		});
 	}

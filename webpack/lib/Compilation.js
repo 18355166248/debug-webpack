@@ -1368,6 +1368,7 @@ BREAKING CHANGE: Asset processing hooks in Compilation has been merged into a si
 
 				this.hooks.buildModule.call(module);
 				this.builtModules.add(module);
+				// webpack\lib\NormalModule.js build
 				module.build(
 					this.options,
 					this,
@@ -1392,6 +1393,7 @@ BREAKING CHANGE: Asset processing hooks in Compilation has been merged into a si
 								this.hooks.failedModule.call(module, err);
 								return callback(new ModuleStoreError(module, err));
 							}
+							// 表示 module 阶段成功了
 							this.hooks.succeedModule.call(module);
 							return callback();
 						});
@@ -4497,6 +4499,7 @@ This prevents using hashes of each other and should be avoided.`);
 					for (const chunk of chunkGraph.getModuleChunksIterable(module)) {
 						chunk.auxiliaryFiles.add(fileName);
 					}
+					// 将接续后的 module 放入 assets
 					this.emitAsset(
 						fileName,
 						module.buildInfo.assets[assetName],

@@ -83,7 +83,7 @@ const createCompiler = rawOptions => {
 	//
 	compiler.hooks.environment.call(); // 触发监听 environment 的回调
 	compiler.hooks.afterEnvironment.call(); // 触发监听 afterEnvironment 的回调
-	new WebpackOptionsApply().process(options, compiler); // 基于 options 应用对应的 plugin
+	new WebpackOptionsApply().process(options, compiler); // 基于 options 应用对应的 webpack 内部 plugin
 	compiler.hooks.initialize.call(); // 触发监听 initialize 的回调
 	return compiler;
 };
